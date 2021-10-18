@@ -1,3 +1,5 @@
+import "./db"; // db.js파일을 import해줌으로써 내서버가 mongo에 연결된다.
+import "./models/Video"; 
 import express from "express";
 import morgan from "morgan";
 import globalRouter from "./routers/globalRouter";
