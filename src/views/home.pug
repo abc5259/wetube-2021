@@ -1,6 +1,7 @@
 extends base.pug
+include mixins/video
 
-block head 
-  title Home | Wetube
 block content 
-  h1 Home
+  h2 Welcome here you will see the trending videos
+  each potato in videos 
+    +video(potato)
