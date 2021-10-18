@@ -1,15 +1,15 @@
 export const trending = (req, res) => {
-  res.send("Home Page Videos");
+  res.render("home");
 }
 
 export const see = (req, res) => {
   console.log(req.params);
-  res.send("see");
+  res.render("watch");
 }
 
 export const edit = (req, res) => {
   console.log(req.params);
-  res.send("Edit");
+  res.render("edit");
 }
 
 export const search = (req, res) => {
