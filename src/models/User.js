@@ -1,4 +1,6 @@
+import bcrypt from "bcrypt";
 import mongoose  from "mongoose";
+
 
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
@@ -7,6 +9,11 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   location: { type: String },
 });
+
+userSchema.pre("save", async function() {
+  //this는 create되는 User을 가리킴
+  this.password = await bcrypt.hash(this.password, 5);
+})
 
 const User = mongoose.model("User", userSchema);
 
