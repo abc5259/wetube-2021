@@ -8,12 +8,20 @@ import {
   getChangePssword,
   postChangePassword,
 } from "../controllers/userController";
-import { protectedMiddleware, publicOnlyMiddleware } from "../middlewares";
+import {
+  protectedMiddleware,
+  publicOnlyMiddleware,
+  uploadFile,
+} from "../middlewares";
 
 const userRouter = express.Router();
 
 userRouter.get("/logout", protectedMiddleware, logout);
-userRouter.route("/edit").all(protectedMiddleware).get(getEdit).post(postEdit);
+userRouter
+  .route("/edit")
+  .all(protectedMiddleware)
+  .get(getEdit)
+  .post(uploadFile.single("avatar"), postEdit);
 userRouter.get("/github/start", publicOnlyMiddleware, startGithubLogin);
 userRouter.get("/github/finish", publicOnlyMiddleware, finishGithubLogin);
 userRouter

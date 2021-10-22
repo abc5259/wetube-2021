@@ -152,7 +152,9 @@ export const postEdit = async (req, res) => {
       user: { _id },
     },
     body: { name, email, username, location },
+    file,
   } = req;
+  console.log(file);
   //req.session.user의 정보와 위 email,username이 다른지 판단 => 다르면 바꾼것.
   //판단 후 다르다면(바꿧다면) 바뀐 이메일과 유저네임이 이미 있는 것 인지 확인. 있으면 에러메세지 없으면 바꾸게
   if (req.session.user.email !== email) {
