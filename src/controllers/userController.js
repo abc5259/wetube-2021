@@ -38,14 +38,6 @@ export const postJoin = async (req, res) => {
   }
 };
 
-export const getEdit = (req, res) => {
-  return res.render("edit-profile", { pageTitle: "Edit Profile" });
-};
-
-export const postEdit = (req, res) => {
-  return res.render("edit-profile", { pageTitle: "Edit Profile" });
-};
-
 export const getLogin = (req, res) => {
   return res.render("login", { pageTitle: "Login" });
 };
@@ -147,4 +139,50 @@ export const finishGithubLogin = async (req, res) => {
   } else {
     return res.redirect("/login");
   }
+};
+
+export const getEdit = (req, res) => {
+  return res.render("edit-profile", { pageTitle: "Edit Profile" });
+};
+
+export const postEdit = async (req, res) => {
+  const pagetitle = "Edit Profile";
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { name, email, username, location },
+  } = req;
+  //req.session.user의 정보와 위 email,username이 다른지 판단 => 다르면 바꾼것.
+  //판단 후 다르다면(바꿧다면) 바뀐 이메일과 유저네임이 이미 있는 것 인지 확인. 있으면 에러메세지 없으면 바꾸게
+  if (req.session.user.email !== email) {
+    const existEmail = await User.exists({ email });
+    if (existEmail) {
+      return res.status(400).render("edit-profile", {
+        pagetitle,
+        errorMessage: "이미 있는 이메일 입니다.",
+      });
+    }
+  }
+  if (req.session.user.username !== username) {
+    const existUsername = await User.exists({ username });
+    if (existUsername) {
+      return res.status(400).render("edit-profile", {
+        pagetitle,
+        errorMessage: "이미 있는 username 입니다.",
+      });
+    }
+  }
+  const updateUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      name,
+      email,
+      username,
+      location,
+    },
+    { new: true }
+  );
+  req.session.user = updateUser;
+  return res.redirect("/users/edit");
 };
