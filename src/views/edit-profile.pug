@@ -4,8 +4,13 @@ block content
   if errorMessage 
     p=errorMessage
   form(method="POST")
+    label(for="avatar") Avatar
+    input(type="file", id="avatar", name="avatar", accept="image/*")
     input(type="text", value=loggedInUser.name, placeholder="name",name="name", requried)
     input(type="email", value=loggedInUser.email,placeholder="email",name="email", requried)
     input(type="text", value=loggedInUser.username placeholder="username",name="username", requried)
     input(type="text", value=loggedInUser.location, placeholder="location",name="location") 
     input(type="submit", value="Edit Profile")  
+    if !loggedInUser.socialOnly
+      hr
+      a(href="change-password") Change Password  
