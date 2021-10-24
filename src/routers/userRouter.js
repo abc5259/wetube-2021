@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  see,
   getEdit,
   logout,
   startGithubLogin,
@@ -29,6 +30,6 @@ userRouter
   .all(protectedMiddleware)
   .get(getChangePssword)
   .post(postChangePassword);
-// userRouter.get("/:id", see);
+userRouter.get("/:id", see);
 
 export default userRouter;
