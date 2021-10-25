@@ -24,7 +24,6 @@ export const getEdit = async (req, res) => {
   if (!video) {
     return res.status(404).render("404", { pageTitle: "Video not found" });
   }
-  console.log(video.owner, _id);
   if (String(video.owner) !== String(_id)) {
     return res.status(403).redirect("/");
   }
