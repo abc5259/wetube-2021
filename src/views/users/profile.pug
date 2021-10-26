@@ -2,5 +2,14 @@ extends ../base
 include ../mixins/video
 
 block content 
-  each potato in user.videos 
-    +video(potato)
+  div.profile_data
+    if loggedInUser.avatarUrl.startsWith("upload")
+      img(src=`/${loggedInUser.avatarUrl}`).avatar
+    if loggedInUser.avatarUrl.startsWith("http")
+      img(src=loggedInUser.avatarUrl).avatar
+    h3=user.name
+  div.video-grid
+    each potato in user.videos 
+      +video(potato)
+    else 
+      span.empty__message No videos found
