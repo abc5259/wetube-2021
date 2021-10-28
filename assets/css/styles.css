@@ -342,7 +342,6 @@ input[type=submit] {
   width: 100%;
 }
 #videoContainer #videoControls {
-  opacity: 0;
   transition: opacity 0.3s ease-in-out;
   background-color: rgba(0, 0, 0, 0.6);
   position: absolute;
