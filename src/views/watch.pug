@@ -1,28 +1,37 @@
 extends base.pug
 
 block content  
-  video(src= `/${video.fileUrl}`, controls)
+  div#videoContainer
+    video(src= `/${video.fileUrl}`)
+    div#videoControls 
+      div.videoControls__column
+        input(type="range", value=0, step="1", min="0")#timeline
+      div.videoControls__column
+        div.videoControls__column--controls
+          button#play
+            i.fas.fa-play
+          button#mute 
+            i.fas.fa-volume-up
+          input(type="range", value=0.5, step="0.1", min="0", max="1")#volume
+          div 
+            span#currentTime 00:00
+            span  /
+            spna#totalTime  00:00
+        div.videoControls__column--controls
+          div 
+            button#fullScreen 
+              i.fas.fa-expand
+  
   div 
-    button#play Play
-    button#mute Mute
-    input(type="range", value=0.5, step="0.1", min="0", max="1")#volume
-    div 
-      span#currentTime 00:00
-      span  /
-      spna#totalTime  00:00
-    div 
-      input(type="range", value=0, step="1", min="0")#timeline
-  //-
-    div 
-      p=video.description 
-      small=video.createdAt  
-    div
-      small Uploaded by 
-        a(href=`/users/${video.owner._id}`)  #{video.owner.name}
-    if String(loggedInUser._id) === String(video.owner._id)
-      a(href=`${video.id}/edit`) Edit Video &rarr;
-      br
-      a(href=`${video.id}/delete`) Delete Video &rarr;
+    p=video.description 
+    small=video.createdAt  
+  div
+    small Uploaded by 
+      a(href=`/users/${video.owner._id}`)  #{video.owner.name}
+  if String(loggedInUser._id) === String(video.owner._id)
+    a(href=`${video.id}/edit`) Edit Video &rarr;
+    br
+    a(href=`${video.id}/delete`) Delete Video &rarr;
 
 block script
   script(src="/static/js/videoPlayer.js") 

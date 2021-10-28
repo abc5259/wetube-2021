@@ -333,6 +333,54 @@ input[type=submit] {
   text-decoration: underline;
 }
 
+#videoContainer {
+  margin: 0 auto;
+  position: relative;
+  max-width: 800px;
+}
+#videoContainer video {
+  width: 100%;
+}
+#videoContainer #videoControls {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  bottom: 0;
+}
+#videoContainer #videoControls.showing {
+  opacity: 1;
+}
+#videoContainer #videoControls .videoControls__column {
+  padding: 0 10px;
+  display: flex;
+  justify-content: space-between;
+}
+#videoContainer #videoControls .videoControls__column #timeline {
+  width: 100%;
+}
+#videoContainer #videoControls .videoControls__column:last-child {
+  padding: 10px 30px;
+}
+#videoContainer #videoControls .videoControls__column:last-child .videoControls__column--controls:nth-child(1) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#videoContainer button {
+  border: none;
+  background: none;
+  color: white;
+  font-size: 1.5rem;
+}
+#videoContainer video,
+#videoContainer button,
+#videoContainer input {
+  cursor: pointer;
+}
+
 a {
   color: inherit;
   text-decoration: none;
