@@ -2,26 +2,38 @@ const startBtn = document.getElementById("startBtn");
 const video = document.getElementById("preview");
 
 let stream;
+let recorder;
+let videoFile;
+
+const handleDownload = () => {
+  const a = document.createElement("a");
+  a.href = videoFile;
+  a.download = "My Recording.webm";
+  document.body.appendChild(a);
+  a.click();
+};
 
 const handleStop = () => {
-  startBtn.innerText = "Start Recording";
+  startBtn.innerText = "Download Recording";
   startBtn.removeEventListener("click", handleStop);
-  startBtn.addEventListener("click", handleStart);
+  startBtn.addEventListener("click", handleDownload);
+  recorder.stop();
 };
 
 const handleStart = () => {
   startBtn.innerText = "Stop Recoding";
   startBtn.removeEventListener("click", handleStart);
   startBtn.addEventListener("click", handleStop);
-  const recorder = new MediaRecorder(stream);
+  recorder = new MediaRecorder(stream);
   recorder.ondataavailable = e => {
     console.log(e);
+    videoFile = URL.createObjectURL(e.data);
+    video.srcObject = null;
+    video.src = videoFile;
+    video.loop = true;
+    video.play();
   };
-  console.log(recorder);
   recorder.start();
-  setTimeout(() => {
-    recorder.stop();
-  }, 10000);
 };
 
 const init = async () => {
@@ -36,3 +48,4 @@ const init = async () => {
 init();
 
 startBtn.addEventListener("click", handleStart);
+// 브라우저의 메모리 상에 파일을 저장해두고 브라우저가 그파일에 접근할 수 있는 url을 주는것임
