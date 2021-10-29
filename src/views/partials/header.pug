@@ -19,9 +19,9 @@ header
                       i.far.fa-user
                     else 
                       if loggedInUser.avatarUrl.startsWith("upload")
-                        img(src=`/${loggedInUser.avatarUrl}`).header__avatar
+                        img(src=`/${loggedInUser.avatarUrl}`, crossorigin).header__avatar
                       if loggedInUser.avatarUrl.startsWith("http")
-                        img(src=loggedInUser.avatarUrl).header__avatar
+                        img(src=loggedInUser.avatarUrl, crossorigin).header__avatar
           else
               li
                   a(href="/login") Login   
