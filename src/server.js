@@ -34,7 +34,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use("/static", express.static("assets"));
-app.use("/public", express.static("node_modules/@ffmpeg/core/dist"));
+app.use("/uploads", express.static("uploads"));
 app.use("/", rootRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);

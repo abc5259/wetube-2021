@@ -122,7 +122,7 @@ const handleVideoClick = () => {
 
 const handleEnded = () => {
   const { id } = videoContainer.dataset;
-  fetch(`/videos/${id}/view`, {
+  fetch(`/api/videos/${id}/view`, {
     method: "POST",
   });
 };
