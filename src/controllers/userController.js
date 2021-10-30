@@ -66,6 +66,7 @@ export const postLogin = async (req, res) => {
 };
 
 export const logout = (req, res) => {
+  req.flash("info", "Bye");
   req.session.destroy();
   return res.redirect("/");
 };
@@ -190,6 +191,7 @@ export const postEdit = async (req, res) => {
 
 export const getChangePssword = (req, res) => {
   if (req.session.user.socialOnly) {
+    req.flash("error", "Can't change password");
     return res.redirect("/");
   }
   res.render("change-password", { pageTitle: "Change Password" });
@@ -218,6 +220,7 @@ export const postChangePassword = async (req, res) => {
   const user = await User.findById(_id);
   user.password = newPassword;
   await user.save();
+  req.flash("info", "Password Updated");
   req.session.user.password = user.password;
   return res.redirect("/users/logout");
 };
@@ -232,6 +235,7 @@ export const see = async (req, res) => {
     },
   });
   if (!user) {
+    req.flash("error", "User not found.");
     return res.status(404).render("404", { pageTitle: "User not found." });
   }
   return res.render("users/profile", {
