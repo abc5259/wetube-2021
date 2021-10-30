@@ -1,7 +1,9 @@
-#videoContainer {
-  margin: 0 auto;
-  position: relative;
+.watch-video {
   max-width: 800px;
+}
+
+#videoContainer {
+  position: relative;
   video {
     width: 100%;
   }
@@ -43,5 +45,42 @@
   button,
   input {
     cursor: pointer;
+  }
+}
+
+.video_description {
+  margin-top: 20px;
+  line-height: 1.4;
+  .video_description__column:first-child {
+    border-bottom: 1px solid rgba($color: #ffffff, $alpha: 0.6);
+    padding: 20px 0;
+    p {
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+    }
+    small {
+      font-size: 0.9rem;
+      color: rgba($color: #ffffff, $alpha: 0.6);
+    }
+  }
+  .video_description__column:nth-child(2) {
+    padding: 20px 0;
+    a {
+      display: inline-flex;
+      align-items: center;
+    }
+    .avatar {
+      margin-right: 10px;
+      width: 50px;
+      height: 50px;
+    }
+  }
+  .video_description__column:last-child {
+    .video__edit {
+      color: seagreen;
+    }
+    .video__delete {
+      color: $red;
+    }
   }
 }

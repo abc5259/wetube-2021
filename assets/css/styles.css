@@ -334,10 +334,12 @@ input[type=submit] {
   text-decoration: underline;
 }
 
-#videoContainer {
-  margin: 0 auto;
-  position: relative;
+.watch-video {
   max-width: 800px;
+}
+
+#videoContainer {
+  position: relative;
 }
 #videoContainer video {
   width: 100%;
@@ -380,6 +382,41 @@ input[type=submit] {
 #videoContainer button,
 #videoContainer input {
   cursor: pointer;
+}
+
+.video_description {
+  margin-top: 20px;
+  line-height: 1.4;
+}
+.video_description .video_description__column:first-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  padding: 20px 0;
+}
+.video_description .video_description__column:first-child p {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+}
+.video_description .video_description__column:first-child small {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+.video_description .video_description__column:nth-child(2) {
+  padding: 20px 0;
+}
+.video_description .video_description__column:nth-child(2) a {
+  display: inline-flex;
+  align-items: center;
+}
+.video_description .video_description__column:nth-child(2) .avatar {
+  margin-right: 10px;
+  width: 50px;
+  height: 50px;
+}
+.video_description .video_description__column:last-child .video__edit {
+  color: seagreen;
+}
+.video_description .video_description__column:last-child .video__delete {
+  color: #ff1300;
 }
 
 a {
