@@ -44,6 +44,10 @@ block content
         form.video__comment-form#commentForm
           textarea(cols="30", rows="10", placeholder="공개 댓글 추가...")
           button 댓글
+    div.video__comments 
+      ul
+        each comment in video.comments.reverse()
+          li.video__comment=comment.text
 
 block scripts
   script(src="/static/js/videoPlayer.js") 
