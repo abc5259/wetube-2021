@@ -385,7 +385,7 @@ input[type=submit] {
 }
 
 .video_description {
-  margin-top: 20px;
+  margin-top: 10px;
   line-height: 1.4;
 }
 .video_description .video_description__column:first-child {

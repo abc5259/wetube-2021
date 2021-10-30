@@ -28,9 +28,9 @@ block content
         small 최초 공개: #{video.createdAt}  
       div.video_description__column 
           a(href=`/users/${video.owner._id}`)
-            if loggedInUser.avatarUrl.startsWith("upload")
+            if video.owner.avatarUrl.startsWith("upload")
               img(src=`/${video.owner.avatarUrl}`, crossorigin).avatar
-            if loggedInUser.avatarUrl.startsWith("http")
+            if video.owner.avatarUrl.startsWith("http")
               img(src=video.owner.avatarUrl, crossorigin).avatar
             span=video.owner.name
       div.video_description__column
@@ -39,5 +39,12 @@ block content
           br
           a.video__delete(href=`${video.id}/delete`) Delete Video &rarr;
 
+    if loggedIn
+      div.video__comments
+        form.video__comment-form#commentForm
+          textarea(cols="30", rows="10", placeholder="공개 댓글 추가...")
+          button 댓글
+
 block scripts
   script(src="/static/js/videoPlayer.js") 
+  script(src="/static/js/commentSection.js") 
