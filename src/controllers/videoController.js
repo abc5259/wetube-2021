@@ -14,7 +14,15 @@ export const watch = async (req, res) => {
   const videos = await Video.find({})
     .sort({ createdAt: "desc" })
     .populate("owner");
-  const video = await Video.findById(id).populate("owner").populate("comments");
+  const video = await Video.findById(id)
+    .populate("owner")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "owner",
+        model: "User",
+      },
+    });
   console.log(video);
   if (!video) {
     return res.status(404).render("404", { pageTitle: "Video not found" });

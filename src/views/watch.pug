@@ -26,7 +26,7 @@ block video
       div.video_description 
         div.video_description__column 
           p=video.description 
-          small 최초 공개: #{video.createdAt.toLocaleString()}  
+          small 조회수 #{video.meta.views}회 | 최초 공개: #{video.createdAt.toLocaleString()}  
         div.video_description__column 
             a(href=`/users/${video.owner._id}`)
               if video.owner.avatarUrl.startsWith("upload")
@@ -39,16 +39,46 @@ block video
             a.video__edit(href=`${video.id}/edit`) Edit Video &rarr;
             br
             a.video__delete(href=`${video.id}/delete`) Delete Video &rarr;
+      div.video__comments-wrapper
+        div.video__comments--length 
+          span 댓글 #{video.comments.length}개
+        if loggedIn
+          div.video__comments
+            form.video__comment-form#commentForm 
+              div.video__comment-form__column
+                if !loggedInUser.avatarUrl
+                  i.far.fa-user.video__comments--avatar
+                else 
+                  if loggedInUser.avatarUrl.startsWith("upload")
+                    img(src=`/${loggedInUser.avatarUrl}`, crossorigin).video__comments--avatar
+                  if loggedInUser.avatarUrl.startsWith("http")
+                    img(src=loggedInUser.avatarUrl, crossorigin).video__comments--avatar
+              div.video__comment-form__column
+                input(placeholder="공개 댓글 추가...")
+                button 댓글
+        div.video__comments 
+          ul
+            each comment in video.comments.reverse()
+              li.video__comment-wrapper
+                div.video__comment__column
+                  a(href=`/users/${comment.owner._id}`) 
+                    if !comment.owner.avatarUrl
+                      i.far.fa-user.video__comments--avatar
+                    else 
+                      if comment.owner.avatarUrl.startsWith("upload")
+                        img(src=`/${comment.owner.avatarUrl}`, crossorigin).video__comments--avatar
+                      if comment.owner.avatarUrl.startsWith("http")
+                        img(src=comment.owner.avatarUrl, crossorigin).video__comments--avatar
+                div.video__comment__column
+                  div.video__comment-owner 
+                    div=comment.owner.name 
+                    div=comment.createAt.toLocaleDateString()
+                  div.video__comment
+                    span=comment.text    
+                div.video__comment__column
+                  if String(comment.owner._id) === String(loggedInUser._id)
+                    span 삭제
 
-      if loggedIn
-        div.video__comments
-          form.video__comment-form#commentForm
-            textarea(cols="30", rows="10", placeholder="공개 댓글 추가...")
-            button 댓글
-      div.video__comments 
-        ul
-          each comment in video.comments.reverse()
-            li.video__comment=comment.text
     div.watch-videos 
       ul
         each video in videos
@@ -56,10 +86,10 @@ block video
             a(href=`/videos/${video.id}`)
               img(src=`/${video.thumbUrl}`).video-tumbnail
               div.watch-video__info
-                div.watch-video-__info__column
+                div.watch-video__info__column
                   div.watch-video__title
                     span=video.title
-                div.watch-video-__info__column 
+                div.watch-video__info__column 
                   div.watch-video__owner 
                     span=video.owner.name
                   div.watch-video__view 
