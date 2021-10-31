@@ -3,10 +3,25 @@ const form = document.querySelector("#commentForm");
 const input = form.querySelector("input");
 const button = form.querySelector("button");
 
-const addComment = text => {
+const addComment = (text, json) => {
+  const { user, comment } = json;
   const videoComments = document.querySelector(".video__comments ul");
   const li = document.createElement("li");
-  li.innerText = text;
+  li.classList.add = "video__comment-wrapper";
+  li.dataset.id = comment._id;
+  li.innerHTML = `
+    <div class="video__comment__column">
+      <a href=/users/${user._id}>
+        <img class="video__comments--avatar" src=${user.avatarUrl} crossorigin>
+      </a>
+    </div>
+    <div class="video__comment__column">
+      <div class="video__comment-owner">
+        <div>${user.name}</div>
+        <div>${comment.createAt}</div>
+      </div>
+    </div>
+  `;
   videoComments.prepend(li);
 };
 
@@ -17,7 +32,7 @@ const handleSubmit = async e => {
   if (text === "") {
     return;
   }
-  const { status } = await fetch(`/api/videos/${videoId}/comment`, {
+  const response = await fetch(`/api/videos/${videoId}/comment`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -26,9 +41,11 @@ const handleSubmit = async e => {
       text,
     }),
   });
-  input.value = "";
-  if (status === 201) {
-    addComment(text);
+  const json = await response.json();
+  console.log(json);
+  if (response.status === 201) {
+    input.value = "";
+    addComment(text, json);
     changeAddCommentBtnColor("#ffffff1a", "#aaaaaa");
   }
 };

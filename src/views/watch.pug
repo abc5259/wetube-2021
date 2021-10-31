@@ -59,7 +59,7 @@ block video
         div.video__comments 
           ul
             each comment in video.comments.reverse()
-              li.video__comment-wrapper
+              li.video__comment-wrapper(data-id=comment.id)
                 div.video__comment__column
                   a(href=`/users/${comment.owner._id}`) 
                     if !comment.owner.avatarUrl
@@ -78,6 +78,7 @@ block video
                 div.video__comment__column
                   if String(comment.owner._id) === String(loggedInUser._id)
                     span 삭제
+
 
     div.watch-videos 
       ul
