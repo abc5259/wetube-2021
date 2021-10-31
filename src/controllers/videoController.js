@@ -11,13 +11,16 @@ export const home = async (req, res) => {
 
 export const watch = async (req, res) => {
   const { id } = req.params;
+  const videos = await Video.find({})
+    .sort({ createdAt: "desc" })
+    .populate("owner");
   const video = await Video.findById(id).populate("owner").populate("comments");
   console.log(video);
   if (!video) {
     return res.status(404).render("404", { pageTitle: "Video not found" });
   }
   console.log(video);
-  return res.render("watch", { pageTitle: video.title, video });
+  return res.render("watch", { pageTitle: video.title, video, videos });
 };
 
 export const getEdit = async (req, res) => {

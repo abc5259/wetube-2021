@@ -1,53 +1,73 @@
 extends base.pug
 
-block content  
-  div.watch-video
-    div#videoContainer(data-id=video._id)
-      video(src= `/${video.fileUrl}`)
-      div#videoControls 
-        div.videoControls__column
-          input(type="range", value=0, step="1", min="0")#timeline
-        div.videoControls__column
-          div.videoControls__column--controls
-            button#play
-              i.fas.fa-play
-            button#mute 
-              i.fas.fa-volume-up
-            input(type="range", value=0.5, step="0.1", min="0", max="1")#volume
-            div 
-              span#currentTime 00:00
-              span  /
-              spna#totalTime  00:00
-          div.videoControls__column--controls
-            div 
-              button#fullScreen 
-                i.fas.fa-expand
-    div.video_description 
-      div.video_description__column 
-        p=video.description 
-        small 최초 공개: #{video.createdAt}  
-      div.video_description__column 
-          a(href=`/users/${video.owner._id}`)
-            if video.owner.avatarUrl.startsWith("upload")
-              img(src=`/${video.owner.avatarUrl}`, crossorigin).avatar
-            if video.owner.avatarUrl.startsWith("http")
-              img(src=video.owner.avatarUrl, crossorigin).avatar
-            span=video.owner.name
-      div.video_description__column
-        if String(loggedInUser._id) === String(video.owner._id)
-          a.video__edit(href=`${video.id}/edit`) Edit Video &rarr;
-          br
-          a.video__delete(href=`${video.id}/delete`) Delete Video &rarr;
+block video
+  section   
+    div.watch-video
+      div#videoContainer(data-id=video._id)
+        video(src= `/${video.fileUrl}`)
+        div#videoControls 
+          div.videoControls__column
+            input(type="range", value=0, step="1", min="0")#timeline
+          div.videoControls__column
+            div.videoControls__column--controls
+              button#play
+                i.fas.fa-play
+              button#mute 
+                i.fas.fa-volume-up
+              input(type="range", value=0.5, step="0.1", min="0", max="1")#volume
+              div 
+                span#currentTime 00:00
+                span  /
+                spna#totalTime  00:00
+            div.videoControls__column--controls
+              div 
+                button#fullScreen 
+                  i.fas.fa-expand
+      div.video_description 
+        div.video_description__column 
+          p=video.description 
+          small 최초 공개: #{video.createdAt.toLocaleString()}  
+        div.video_description__column 
+            a(href=`/users/${video.owner._id}`)
+              if video.owner.avatarUrl.startsWith("upload")
+                img(src=`/${video.owner.avatarUrl}`, crossorigin).avatar
+              if video.owner.avatarUrl.startsWith("http")
+                img(src=video.owner.avatarUrl, crossorigin).avatar
+              span=video.owner.name
+        div.video_description__column
+          if String(loggedInUser._id) === String(video.owner._id)
+            a.video__edit(href=`${video.id}/edit`) Edit Video &rarr;
+            br
+            a.video__delete(href=`${video.id}/delete`) Delete Video &rarr;
 
-    if loggedIn
-      div.video__comments
-        form.video__comment-form#commentForm
-          textarea(cols="30", rows="10", placeholder="공개 댓글 추가...")
-          button 댓글
-    div.video__comments 
+      if loggedIn
+        div.video__comments
+          form.video__comment-form#commentForm
+            textarea(cols="30", rows="10", placeholder="공개 댓글 추가...")
+            button 댓글
+      div.video__comments 
+        ul
+          each comment in video.comments.reverse()
+            li.video__comment=comment.text
+    div.watch-videos 
       ul
-        each comment in video.comments.reverse()
-          li.video__comment=comment.text
+        each video in videos
+          li
+            a(href=`/videos/${video.id}`)
+              img(src=`/${video.thumbUrl}`).video-tumbnail
+              div.watch-video__info
+                div.watch-video-__info__column
+                  div.watch-video__title
+                    span=video.title
+                div.watch-video-__info__column 
+                  div.watch-video__owner 
+                    span=video.owner.name
+                  div.watch-video__view 
+                    span 조회수 #{video.meta.views}회
+                    span  #{video.createdAt.toLocaleDateString()}
+        
+
+
 
 block scripts
   script(src="/static/js/videoPlayer.js") 
