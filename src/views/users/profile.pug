@@ -5,7 +5,7 @@ block content
   div.profile-header
     div.profile-header__column
       if !user.avatarUrl
-        i.far.fa-user
+        i.far.fa-user.header__avatar
       else 
         if user.avatarUrl.startsWith("upload")
           img(src=`/${user.avatarUrl}`, crossorigin).header__avatar
@@ -13,9 +13,20 @@ block content
           img(src=user.avatarUrl, crossorigin).header__avatar
     div.profile-header__column
       h3=user.name
-      span 구독자 #{user.subscribers}명
+      span 구독자 #{user.subscribers}명 
+    div.profile-header__column
+      if loggedIn && String(user._id) !== String(loggedInUser._id)
+        div.subscribe(data-userid=user._id)
+          if loggedInUser.subscribe.includes(String(user._id))
+            span.subscribing 구독중
+          else 
+            span 구독
   div.video-grid
     each potato in user.videos 
       +video(potato)
     else 
       span.empty__message No videos found
+
+block scripts
+  if String(user._id) !== String(loggedInUser._id)
+    script(src="/static/js/subscribe.js")
