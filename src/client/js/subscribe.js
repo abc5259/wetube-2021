@@ -1,10 +1,16 @@
 const subscribe = document.querySelector(".subscribe");
 const span = subscribe.querySelector("span");
 
+const paintSubscribe = (text, color, backgroundColor) => {
+  span.innerText = text;
+  subscribe.style.color = color;
+  subscribe.style.backgroundColor = backgroundColor;
+};
+
 const handleSubscribe = async e => {
   const { userid } = subscribe.dataset;
   if (span.innerText === "구독") {
-    await fetch("/api/users/subscribe", {
+    const response = await fetch("/api/users/subscribe", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -13,8 +19,12 @@ const handleSubscribe = async e => {
         userid,
       }),
     });
+    console.log(response.status);
+    if (response.status === 200) {
+      paintSubscribe("구독중", "#AAAAAA", "#FFFFFF1A");
+    }
   } else {
-    await fetch("/api/users/cancelSubscribe", {
+    const response = await fetch("/api/users/cancelSubscribe", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -23,10 +33,10 @@ const handleSubscribe = async e => {
         userid,
       }),
     });
+    if (response.status === 200) {
+      paintSubscribe("구독", "#ffffff", "#cc0000");
+    }
   }
 };
 
 subscribe.addEventListener("click", handleSubscribe);
-
-// watch에서 보내면 video owner로 찾으면 되고
-// user profile로 보내면  user id로 보내면 되기는 한데..???????
