@@ -1,6 +1,7 @@
 import User from "../models/User";
 import Video from "../models/Video";
 import Comment from "../models/Comment";
+import { async } from "regenerator-runtime";
 
 export const home = async (req, res) => {
   const videos = await Video.find({})
@@ -163,4 +164,23 @@ export const createComment = async (req, res) => {
   video.comments.push(comment._id);
   await video.save();
   return res.status(201).json({ user, comment });
+};
+
+export const deleteComment = async (req, res) => {
+  const {
+    params: { id },
+    body: { commentId },
+  } = req;
+  const video = await Video.findById(id);
+  const commnet = await Comment.findById(commentId);
+  if (!video) {
+    return res.sendStatus(404);
+  }
+  if (!commnet) {
+    return res.sendStatus(404);
+  }
+  await Comment.findByIdAndDelete(commentId);
+  video.comments.splice(video.comments.indexOf(commentId), 1);
+  await video.save();
+  return res.sendStatus(200);
 };

@@ -2,33 +2,62 @@ const videoContainer = document.getElementById("videoContainer");
 const form = document.querySelector("#commentForm");
 const input = form.querySelector("input");
 const button = form.querySelector("button");
+const deleteComment = document.querySelectorAll(".comment__delete");
+
+const fakeDeletComment = li => {
+  li.remove();
+};
+
+const handleDeleteComment = async e => {
+  const videoId = videoContainer.dataset.id;
+  const li = e.currentTarget.parentElement;
+  const commentId = li.dataset.id;
+  await fetch(`/api/videos/${videoId}/comment/delete`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      commentId,
+    }),
+  });
+  fakeDeletComment(li);
+};
 
 const addComment = (text, json) => {
-  const { user, comment } = json;
+  const {
+    user: { _id, avatarUrl, name },
+    comment,
+  } = json;
+  const avatarUrlSrc = avatarUrl.startsWith("http")
+    ? avatarUrl
+    : `/${avatarUrl}`;
   const videoComments = document.querySelector(".video__comments ul");
   const li = document.createElement("li");
   li.dataset.id = comment._id;
   li.className = "video__comment-wrapper";
   li.innerHTML = `
     <div class="video__comment__column">
-      <a href=/users/${user._id}>
-        <img class="video__comments--avatar" src=${user.avatarUrl} crossorigin>
+      <a href=/users/${_id}>
+        <img class="video__comments--avatar" src=${avatarUrlSrc} crossorigin>
       </a>
     </div>
     <div class="video__comment__column">
       <div class="video__comment-owner">
-        <div>${user.name}</div>
+        <div>${name}</div>
         <div>${new Date(comment.createAt).toLocaleDateString()}</div>
       </div>
       <div class="video__comment">
-        <span>${comment.text}</span>
+        <span>${text}</span>
       </div>
     </div>
-    <div class="video__comment__column">
+    <div class="video__comment__column comment__delete deleteBtn">
       <span>삭제</span>
     </div>
   `;
   videoComments.prepend(li);
+  const deleteBtn = document.querySelector(".deleteBtn");
+  deleteBtn.addEventListener("click", handleDeleteComment);
 };
 
 const handleSubmit = async e => {
@@ -61,7 +90,7 @@ const changeAddCommentBtnColor = (backgroundColor, color) => {
   button.style.color = color;
 };
 
-const handlerInput = () => {
+const handleInput = () => {
   if (input.value) {
     changeAddCommentBtnColor("#3ea6ff", "#030303");
   } else {
@@ -70,4 +99,7 @@ const handlerInput = () => {
 };
 
 form.addEventListener("submit", handleSubmit);
-input.addEventListener("input", handlerInput);
+input.addEventListener("input", handleInput);
+deleteComment.forEach(item =>
+  item.addEventListener("click", handleDeleteComment)
+);

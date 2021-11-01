@@ -75,7 +75,7 @@ block video
                     div=comment.createAt.toLocaleDateString()
                   div.video__comment
                     span=comment.text    
-                div.video__comment__column
+                div.video__comment__column.comment__delete
                   if String(comment.owner._id) === String(loggedInUser._id)
                     span 삭제
 
