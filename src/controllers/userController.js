@@ -2,6 +2,7 @@ import User from "../models/User";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 import Video from "../models/Video";
+import { async } from "regenerator-runtime";
 
 export const getJoin = (req, res) => {
   return res.render("join", { pageTitle: "Join" });
@@ -242,4 +243,42 @@ export const see = async (req, res) => {
     pageTitle: `${user.name} Profile`,
     user,
   });
+};
+
+export const addSubscribe = async (req, res) => {
+  const {
+    body: { userid },
+    session: { user },
+  } = req;
+  const subscriptionTarget = await User.findById(userid);
+  const me = await User.findById(user._id);
+  if (!subscriptionTarget) {
+    return res.sendStatus(404);
+  }
+  if (!me) {
+    return res.sendStatus(404);
+  }
+  me.subscribe.push(subscriptionTarget._id);
+  await me.save();
+  req.session.user = me;
+  return res.sendStatus(200);
+};
+
+export const cancelSubscribe = async (req, res) => {
+  const {
+    body: { userid },
+    session: { user },
+  } = req;
+  const subscriptionTarget = await User.findById(userid);
+  const me = await User.findById(user._id);
+  if (!subscriptionTarget) {
+    return res.sendStatus(404);
+  }
+  if (!me) {
+    return res.sendStatus(404);
+  }
+  me.subscribe.splice(me.subscribe.indexOf(subscriptionTarget._id), 1);
+  await me.save();
+  req.session.user = me;
+  return res.sendStatus(200);
 };
