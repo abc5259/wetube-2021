@@ -7,8 +7,8 @@ const addComment = (text, json) => {
   const { user, comment } = json;
   const videoComments = document.querySelector(".video__comments ul");
   const li = document.createElement("li");
-  li.classList.add = "video__comment-wrapper";
   li.dataset.id = comment._id;
+  li.className = "video__comment-wrapper";
   li.innerHTML = `
     <div class="video__comment__column">
       <a href=/users/${user._id}>
@@ -18,8 +18,14 @@ const addComment = (text, json) => {
     <div class="video__comment__column">
       <div class="video__comment-owner">
         <div>${user.name}</div>
-        <div>${comment.createAt}</div>
+        <div>${new Date(comment.createAt).toLocaleDateString()}</div>
       </div>
+      <div class="video__comment">
+        <span>${comment.text}</span>
+      </div>
+    </div>
+    <div class="video__comment__column">
+      <span>삭제</span>
     </div>
   `;
   videoComments.prepend(li);
