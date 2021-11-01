@@ -4,8 +4,20 @@ const input = form.querySelector("input");
 const button = form.querySelector("button");
 const deleteComment = document.querySelectorAll(".comment__delete");
 
-const fakeDeletComment = li => {
-  li.remove();
+const commentsLength = isPlus => {
+  const commentsLengthElem = document.querySelector(
+    ".video__comments--length span"
+  );
+  const commentLength = commentsLengthElem.innerText.replace(/[^0-9]/g, "");
+  const length = isPlus
+    ? parseInt(commentLength) + 1
+    : parseInt(commentLength) - 1;
+  commentsLengthElem.innerText = `댓글 ${length}개`;
+};
+
+const fakeDeletComment = commentElem => {
+  commentElem.remove();
+  commentsLength(false);
 };
 
 const handleDeleteComment = async e => {
@@ -56,6 +68,7 @@ const addComment = (text, json) => {
     </div>
   `;
   videoComments.prepend(li);
+  commentsLength(true);
   const deleteBtn = document.querySelector(".deleteBtn");
   deleteBtn.addEventListener("click", handleDeleteComment);
 };

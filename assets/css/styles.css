@@ -134,6 +134,7 @@ table {
 }
 
 header {
+  background-color: rgba(0, 0, 0, 0.3);
   padding: 20px 50px;
   display: flex;
   justify-content: space-between;
@@ -265,6 +266,21 @@ input[type=submit] {
 .social__login .social__btn--github {
   background-color: transparent;
   color: azure;
+}
+
+.subscribe {
+  font-size: 0.9rem;
+  width: 70px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  background-color: #cc0000;
+  cursor: pointer;
+}
+.subscribe:hover {
+  opacity: 0.7;
 }
 
 .video-grid {
@@ -409,12 +425,17 @@ section {
 }
 .video_description .video_description__column:nth-child(2) {
   padding: 20px 0;
+  display: flex;
+  align-items: center;
 }
-.video_description .video_description__column:nth-child(2) a {
+.video_description .video_description__column:nth-child(2) .video_description__column--image {
+  flex-grow: 1;
+}
+.video_description .video_description__column:nth-child(2) .video_description__column--image a {
   display: inline-flex;
   align-items: center;
 }
-.video_description .video_description__column:nth-child(2) .avatar {
+.video_description .video_description__column:nth-child(2) .video_description__column--image .avatar {
   margin-right: 10px;
   width: 50px;
   height: 50px;

@@ -1,0 +1,14 @@
+.subscribe {
+  font-size: 0.9rem;
+  width: 70px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  background-color: #cc0000;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.7;
+  }
+}
