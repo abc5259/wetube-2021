@@ -39,4 +39,8 @@ const handleSubscribe = async e => {
   }
 };
 
+if (span.innerText === "구독중") {
+  paintSubscribe("구독중", "#AAAAAA", "#FFFFFF1A");
+}
+
 subscribe.addEventListener("click", handleSubscribe);

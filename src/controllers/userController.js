@@ -2,7 +2,6 @@ import User from "../models/User";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 import Video from "../models/Video";
-import { async } from "regenerator-runtime";
 
 export const getJoin = (req, res) => {
   return res.render("join", { pageTitle: "Join" });
@@ -239,6 +238,7 @@ export const see = async (req, res) => {
     req.flash("error", "User not found.");
     return res.status(404).render("404", { pageTitle: "User not found." });
   }
+  console.log(user);
   return res.render("users/profile", {
     pageTitle: `${user.name} Profile`,
     user,
@@ -259,7 +259,9 @@ export const addSubscribe = async (req, res) => {
     return res.sendStatus(404);
   }
   me.subscribe.push(subscriptionTarget._id);
+  subscriptionTarget.subscribers += 1;
   await me.save();
+  await subscriptionTarget.save();
   req.session.user = me;
   return res.sendStatus(200);
 };
@@ -278,7 +280,9 @@ export const cancelSubscribe = async (req, res) => {
     return res.sendStatus(404);
   }
   me.subscribe.splice(me.subscribe.indexOf(subscriptionTarget._id), 1);
+  subscriptionTarget.subscribers -= 1;
   await me.save();
+  await subscriptionTarget.save();
   req.session.user = me;
   return res.sendStatus(200);
 };
