@@ -13,7 +13,7 @@ block content
           img(src=user.avatarUrl, crossorigin).header__avatar
     div.profile-header__column
       h3=user.name
-      span 구독자 #{user.subscribers}명 
+      span.subscribers__length 구독자 #{user.subscribers}명 
     div.profile-header__column
       if loggedIn && String(user._id) !== String(loggedInUser._id)
         div.subscribe(data-userid=user._id)
@@ -28,5 +28,6 @@ block content
       span.empty__message No videos found
 
 block scripts
-  if String(user._id) !== String(loggedInUser._id)
+  if loggedIn && String(user._id) !== String(loggedInUser._id)
     script(src="/static/js/subscribe.js")
+    script(src="/static/js/profile.js")

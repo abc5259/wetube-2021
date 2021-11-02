@@ -10,6 +10,7 @@ module.exports = {
     recorder: `${BASE_JS}/recorder`,
     commentSection: `${BASE_JS}/commentSection`,
     subscribe: `${BASE_JS}/subscribe`,
+    profile: `${BASE_JS}/profile`,
   },
   mode: "development",
   watch: true,

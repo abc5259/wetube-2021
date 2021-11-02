@@ -34,7 +34,7 @@ block video
                   img(src=`/${video.owner.avatarUrl}`, crossorigin).avatar
                 if video.owner.avatarUrl.startsWith("http")
                   img(src=video.owner.avatarUrl, crossorigin).avatar
-                span=video.owner.name
+                span=video.owner.name 
             if loggedIn && String(video.owner._id) !== String(loggedInUser._id)
               div.subscribe(data-userid=video.owner._id)
                 if loggedInUser.subscribe.includes(String(video.owner._id))
