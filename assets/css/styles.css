@@ -345,6 +345,49 @@ input[type=submit] {
   font-size: 0.9rem;
 }
 
+.subscribe__info {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+.subscribe__info h3 {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+.subscribe__info ul {
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  column-gap: 70px;
+}
+.subscribe__info ul a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.5;
+}
+.subscribe__info ul a h3 {
+  all: unset;
+}
+.subscribe__info ul a .subscribe__info-avatar {
+  width: 100%;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.user_video {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+}
+.user_video h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+
 .edit-profile__form label {
   font-size: 14px;
   margin-bottom: 10px;

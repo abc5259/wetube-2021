@@ -21,11 +21,25 @@ block content
             span.subscribing 구독중
           else 
             span 구독
-  div.video-grid
-    each potato in user.videos 
-      +video(potato)
-    else 
-      span.empty__message No videos found
+  if  user.subscribe.length > 0
+    section.subscribe__info 
+      h3 구독정보 
+      ul 
+        each subscribePelple in user.subscribe 
+          a(href=`/users/${subscribePelple._id}`) 
+            if subscribePelple.avatarUrl.startsWith("upload")
+              img(src=`/${subscribePelple.avatarUrl}`, crossorigin).subscribe__info-avatar
+            if subscribePelple.avatarUrl.startsWith("http")
+              img(src=subscribePelple.avatarUrl, crossorigin).subscribe__info-avatar
+            h3=subscribePelple.name 
+            h5 구독자 #{subscribePelple.subscribers}명
+  section.user_video       
+    h3 #{user.name}의 동영상  
+    div.video-grid
+      each potato in user.videos 
+        +video(potato)
+      else 
+        span.empty__message No videos found
 
 block scripts
   if loggedIn && String(user._id) !== String(loggedInUser._id)
