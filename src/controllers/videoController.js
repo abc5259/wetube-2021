@@ -24,11 +24,10 @@ export const watch = async (req, res) => {
         model: "User",
       },
     });
-  console.log(video);
   if (!video) {
     return res.status(404).render("404", { pageTitle: "Video not found" });
   }
-  console.log(video);
+
   return res.render("watch", { pageTitle: video.title, video, videos });
 };
 
@@ -52,7 +51,6 @@ export const postEdit = async (req, res) => {
   const { title, description, hashtags } = req.body;
   const { _id } = req.session.user;
   const video = await Video.findById(id);
-  console.log(video);
   if (!video) {
     res.render("404", { pageTitle: "Video not found" });
   }
@@ -77,7 +75,6 @@ export const postUpload = async (req, res) => {
   const {
     user: { _id },
   } = req.session;
-  console.log(req.files);
   const { video, thumb } = req.files;
   const { title, description, hashtags } = req.body;
   try {

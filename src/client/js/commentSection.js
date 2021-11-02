@@ -90,7 +90,6 @@ const handleSubmit = async e => {
     }),
   });
   const json = await response.json();
-  console.log(json);
   if (response.status === 201) {
     input.value = "";
     addComment(text, json);

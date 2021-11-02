@@ -33,7 +33,6 @@ const handleSubscribe = async e => {
         userid,
       }),
     });
-    console.log(response.status);
     if (response.status === 200) {
       paintSubscribe("구독중", "#AAAAAA", "#FFFFFF1A");
       subscribesLength(true);

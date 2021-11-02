@@ -240,7 +240,6 @@ export const see = async (req, res) => {
     req.flash("error", "User not found.");
     return res.status(404).render("404", { pageTitle: "User not found." });
   }
-  console.log(user);
   return res.render("users/profile", {
     pageTitle: `${user.name} Profile`,
     user,
